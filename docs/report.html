@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Финансовый отчёт селлера — демо</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#1b1f24; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#2563eb; --good:#16a34a; --warn:#d97706; --bad:#dc2626;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
+  header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+  h1{font-size:26px;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:14px}
+  .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:600}
+  .grid{display:grid;gap:14px}
+  .kpi{grid-template-columns:repeat(4,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+  .kpi .label{color:var(--muted);font-size:13px;margin-bottom:6px}
+  .kpi .value{font-size:24px;font-weight:700;letter-spacing:-.3px}
+  .kpi .delta{font-size:12px;margin-top:4px}
+  .up{color:var(--good)} .down{color:var(--bad)} .flat{color:var(--muted)}
+  section{margin-top:26px}
+  h2{font-size:17px;margin:0 0 12px}
+  .two{grid-template-columns:1.4fr 1fr}
+  .bar-row{display:grid;grid-template-columns:120px 1fr 110px;align-items:center;gap:12px;margin:10px 0}
+  .track{height:10px;background:#eef1f5;border-radius:999px;overflow:hidden}
+  .fill{height:100%;border-radius:999px;background:var(--accent)}
+  .fill.good{background:var(--good)} .fill.warn{background:var(--warn)} .fill.bad{background:var(--bad)}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  tbody tr:last-child td{border-bottom:none}
+  .tag{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600}
+  .tag.good{background:#dcfce7;color:#166534}
+  .tag.warn{background:#fef3c7;color:#92400e}
+  .tag.bad{background:#fee2e2;color:#991b1b}
+  ul.rec{margin:0;padding-left:18px}
+  ul.rec li{margin-bottom:8px}
+  .muted{color:var(--muted);font-size:13px}
+  .foot{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+  @media (max-width:820px){.kpi{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.bar-row{grid-template-columns:96px 1fr 84px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="badge">ДЕМО · данные синтетические</div>
+      <h1>Финансовый отчёт селлера</h1>
+      <div class="sub">Декабрь 2026 · Wildberries + Ozon · выручка до СПП</div>
+    </div>
+    <div class="sub">Подготовлено: 23.11.2026</div>
+  </header>
+
+  <div class="grid kpi">
+    <div class="card"><div class="label">Выручка до СПП</div><div class="value">13,5 млн ₽</div><div class="delta up">+18% к ноябрю</div></div>
+    <div class="card"><div class="label">Заказы</div><div class="value">9 240</div><div class="delta up">+12%</div></div>
+    <div class="card"><div class="label">Выкуп</div><div class="value">24,6%</div><div class="delta down">−2,1 п.п.</div></div>
+    <div class="card"><div class="label">Чистая прибыль</div><div class="value">1,8 млн ₽</div><div class="delta up">маржа 13,3%</div></div>
+  </div>
+
+  <section>
+    <h2>План и факт по площадкам</h2>
+    <div class="card">
+      <div class="bar-row"><div>Ozon</div><div class="track"><div class="fill good" style="width:88%"></div></div><div class="num">8,8 из 10,0 млн</div></div>
+      <div class="bar-row"><div>Wildberries</div><div class="track"><div class="fill warn" style="width:72%"></div></div><div class="num">4,7 из 6,5 млн</div></div>
+      <div class="bar-row"><div>Итого</div><div class="track"><div class="fill" style="width:81%"></div></div><div class="num">13,5 из 16,5 млн</div></div>
+      <div class="muted" style="margin-top:10px">План месяца выполнен на 81%. Основной недобор — WB: не хватило товара по двум категориям.</div>
+    </div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <h2>Поступления и остаток по неделям</h2>
+      <svg id="chart" viewBox="0 0 640 260" width="100%" height="260" role="img" aria-label="График поступлений и остатка"></svg>
+      <div class="muted">Столбцы — поступления за неделю, линия — остаток на конец недели. Первая неделя уходит в минус: закупка раньше первых выплат.</div>
+    </div>
+    <div class="card">
+      <h2>Что требует решения</h2>
+      <ul class="rec">
+        <li><b>Кассовый разрыв 1–7 декабря:</b> −2,3 млн ₽. Закрыть сдвигом оплаты партии на неделю или ускорить выплату Ozon.</li>
+        <li><b>WB: выкуп упал до 21%</b> при норме 25–27%. Проверить размерную сетку у двух артикулов.</li>
+        <li><b>Ozon: ДРР 7,0%</b> — реклама дешёвая, можно поднять ставки на топ-5.</li>
+        <li><b>Неликвид:</b> 68 артикулов, 2 073 шт. Распродажа −15–20% освободит ~1,2 млн ₽.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Топ-5 артикулов</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>Артикул</th><th>Площадка</th><th>Продажи, ₽</th><th>ЧП, ₽</th><th>Остаток, дней</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td>Платье кружевное в пол</td><td>Ozon</td><td>1 240 000</td><td>312 000</td><td>14</td><td><span class="tag good">растёт</span></td></tr>
+          <tr><td>Юбка жаккард чёрная</td><td>Ozon</td><td>980 000</td><td>246 000</td><td>9</td><td><span class="tag warn">дефицит</span></td></tr>
+          <tr><td>Костюм с юбкой</td><td>WB</td><td>720 000</td><td>96 000</td><td>31</td><td><span class="tag good">норма</span></td></tr>
+          <tr><td>Платье сетка чёрное</td><td>WB</td><td>540 000</td><td>18 000</td><td>22</td><td><span class="tag warn">маржа низкая</span></td></tr>
+          <tr><td>Топ шёлк</td><td>WB</td><td>310 000</td><td>−12 000</td><td>58</td><td><span class="tag bad">убыток</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Структура расходов</h2>
+    <div class="card">
+      <div class="bar-row"><div>Себестоимость</div><div class="track"><div class="fill" style="width:42%"></div></div><div class="num">42%</div></div>
+      <div class="bar-row"><div>Комиссия площадок</div><div class="track"><div class="fill" style="width:18%"></div></div><div class="num">18%</div></div>
+      <div class="bar-row"><div>Логистика</div><div class="track"><div class="fill" style="width:14%"></div></div><div class="num">14%</div></div>
+      <div class="bar-row"><div>Реклама</div><div class="track"><div class="fill" style="width:6%"></div></div><div class="num">6%</div></div>
+      <div class="bar-row"><div>Постоянные</div><div class="track"><div class="fill" style="width:7%"></div></div><div class="num">7%</div></div>
+      <div class="bar-row"><div>Прибыль</div><div class="track"><div class="fill good" style="width:13%"></div></div><div class="num">13%</div></div>
+    </div>
+  </section>
+
+  <div class="foot">
+    Демонстрационный отчёт: цифры синтетические, клиентских данных нет. Методика — выручка до СПП, прибыль после постоянных расходов,
+    остатки из кабинетов площадок. Структура отчёта совпадает с рабочим шаблоном «ФИН менеджер селлера».
+  </div>
+</div>
+
+<script>
+const data = {
+  weeks: ['01–07.12','08–14.12','15–21.12','22–31.12','01–07.01','08–14.01'],
+  inflow: [0.6, 2.9, 2.8, 2.8, 3.6, 0.9],
+  balance: [-2.3, 0.6, 3.4, 6.1, 9.7, 10.6]
+};
+(function draw(){
+  const svg = document.getElementById('chart');
+  const W = 640, H = 260, padL = 46, padB = 26, padT = 16, padR = 8;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const maxIn = Math.max(...data.inflow) * 1.15;
+  const minB = Math.min(0, ...data.balance), maxB = Math.max(...data.balance) * 1.15;
+  const x = i => padL + (plotW / data.weeks.length) * (i + 0.5);
+  const yIn = v => padT + plotH - (v / maxIn) * plotH;
+  const yB = v => padT + plotH - ((v - minB) / (maxB - minB)) * plotH;
+  const bw = Math.min(44, plotW / data.weeks.length * 0.5);
+
+  let s = '';
+  // сетка и подписи оси
+  for (let k = 0; k <= 4; k++) {
+    const v = maxIn * k / 4;
+    const y = yIn(v);
+    s += `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#eef1f5"/>`;
+    s += `<text x="${padL-6}" y="${y+4}" font-size="10" fill="#9ca3af" text-anchor="end">${v.toFixed(1)}</text>`;
+  }
+  // столбцы
+  data.inflow.forEach((v,i) => {
+    const xx = x(i) - bw/2, yy = yIn(v), h = padT + plotH - yy;
+    s += `<rect x="${xx}" y="${yy}" width="${bw}" height="${Math.max(h,1)}" rx="5" fill="#bfdbfe"/>`;
+  });
+  // линия остатка
+  const pts = data.balance.map((v,i) => `${x(i)},${yB(v)}`).join(' ');
+  s += `<polyline points="${pts}" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linejoin="round"/>`;
+  data.balance.forEach((v,i) => {
+    s += `<circle cx="${x(i)}" cy="${yB(v)}" r="4" fill="#fff" stroke="#16a34a" stroke-width="2"/>`;
+  });
+  // нулевая линия
+  const zero = yB(0);
+  s += `<line x1="${padL}" y1="${zero}" x2="${W-padR}" y2="${zero}" stroke="#dc2626" stroke-dasharray="4 4" opacity=".5"/>`;
+  // подписи недель
+  data.weeks.forEach((w,i) => {
+    s += `<text x="${x(i)}" y="${H-8}" font-size="10" fill="#6b7280" text-anchor="middle">${w}</text>`;
+  });
+  svg.innerHTML = s;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Фин менеджер селлера — описание проекта</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#1b1f24; --muted:#6b7280; --line:#e5e7eb;
+    --accent:#2563eb; --violet:#7c3aed; --good:#16a34a; --warn:#d97706;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:30px 22px 60px}
+  header{margin-bottom:22px}
+  .badge{display:inline-block;padding:4px 10px;border-radius:999px;background:#ede9fe;color:#5b21b6;font-size:12px;font-weight:700;letter-spacing:.04em}
+  h1{font-size:30px;margin:8px 0 6px;letter-spacing:-.5px}
+  .sub{color:var(--muted);font-size:14px}
+  section{margin-top:22px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px;font-weight:700}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .lead{font-size:16px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  ul{margin:0;padding-left:18px}
+  li{margin-bottom:7px}
+  li:last-child{margin-bottom:0}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td:first-child{width:150px;color:var(--muted)}
+  code{background:#f3f4f6;padding:1px 6px;border-radius:6px;font-size:13px}
+  .chip{display:inline-block;padding:2px 8px;border-radius:6px;font-size:12px;font-weight:600;background:#eef2ff;color:#3730a3;margin-right:6px}
+  .flow{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center}
+  .box{border:1px dashed #c7d2fe;background:#f8faff;border-radius:12px;padding:12px 14px}
+  .arrow{color:#a5b4fc;font-size:20px}
+  .muted{color:var(--muted);font-size:13px}
+  .foot{margin-top:30px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+  @media (max-width:760px){.two{grid-template-columns:1fr}.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="badge">ОПИСАНИЕ ПРОЕКТА</div>
+    <h1>Фин менеджер селлера</h1>
+    <div class="sub">Агентская система финансового управления для селлеров Wildberries и Ozon · версия 1.0 · 23.11.2026</div>
+  </header>
+
+  <section>
+    <h2>Проблема</h2>
+    <div class="card">
+      <p class="lead">Селлер видит выручку в кабинете, но не видит денег: когда придут выплаты, хватит ли их на следующую партию и где закончится товар.</p>
+      <ul>
+        <li>Платежи площадок приходят с разными лагами: Ozon — через неделю, WB — через пять. Кассовый разрыв обнаруживается, когда деньги уже нужны.</li>
+        <li>Остатки, продажи и закупки живут в разных файлах; план продаж не сверяется с остатком и деньгами.</li>
+        <li>Итог: замороженные в неликвиде деньги, дефицит на росте, штрафы и упущенные продажи.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Пользователь</h2>
+    <div class="card">
+      <ul>
+        <li><b>Финансовый аналитик на аутсорсинге</b> — ведёт нескольких селлеров, собирает планы и отчёты вручную.</li>
+        <li><b>Селлер малого бизнеса</b> — собственник, который принимает решения по закупке и цене.</li>
+        <li><b>Финансовый менеджер в штате</b> — нужен повторяемый процесс вместо разовых таблиц.</li>
+      </ul>
+      <div class="muted" style="margin-top:10px">Уровень подготовки: уверенный Excel, базовое понимание юнит-экономики. Программирование не требуется — запуск одной командой.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Основная функция</h2>
+    <div class="card">
+      <div class="flow">
+        <div class="box"><b>Вход</b><div class="muted" style="margin-top:6px">Выгрузки WB и Ozon: продажи, заказы, остатки, дневной отчёт. Параметры: доли выплат, лаги, рост, минимальная партия.</div></div>
+        <div class="arrow">→</div>
+        <div class="box"><b>Выход</b><div class="muted" style="margin-top:6px">План по артикулам, календарь поступлений и ДДС, дневной дайджест, недельный разбор.</div></div>
+      </div>
+      <table style="margin-top:14px">
+        <tr><td>Планирование</td><td>Прогноз продаж от факта, наложение остатков, план в штуках, рублях и заказах в день</td></tr>
+        <tr><td>Деньги</td><td>Поступления по неделям с лагами площадок, закупка по себестоимости, остаток на конец, поиск разрывов</td></tr>
+        <tr><td>Контроль</td><td>Выполнение плана по заказам, воронка (показы → карточка → корзина → заказ), ДРР, конверсии</td></tr>
+        <tr><td>Решения</td><td>Что дозаказать, что распродать, где поднять цену, где снизить рекламу</td></tr>
+        <tr><td>Инструменты</td><td>Скрипты Node.js, Excel-шаблоны с формулами, Telegram-бот, HTML/PDF-отчёты</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Формат результата</h2>
+    <div class="card">
+      <ul>
+        <li><b>Excel-план</b> — лист с артикулами, формулами и параметрами: меняешь рост или остаток, всё пересчитывается.</li>
+        <li><b>Excel-ДДС</b> — недели, поступления по площадкам, закупка, остаток, красные недели разрыва.</li>
+        <li><b>Дневной дайджест</b> — 10–15 строк в Telegram: заказы против плана, топ-17, что делать.</li>
+        <li><b>Недельный отчёт</b> — markdown: главное, площадки, группы артикулов, рекомендации, источники.</li>
+        <li><b>Визуальный отчёт</b> — HTML/PDF для показа собственнику или клиенту.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Минимальный функционал (MVP)</h2>
+    <div class="two">
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:8px">В первой версии</div>
+        <ul>
+          <li>Главный агент + 4 субагента: план, деньги, день, неделя.</li>
+          <li>2 шаблона планов с формулами (WB и Ozon).</li>
+          <li>ДДС и платёжный календарь с лагами.</li>
+          <li>Дневной дайджест с отправкой в Telegram.</li>
+          <li>3 файла правил и инструкция запуска.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:8px">Дальше</div>
+        <ul>
+          <li>Автозагрузка выгрузок через API площадок.</li>
+          <li>Несколько клиентов в одном интерфейсе.</li>
+          <li>Веб-дашборд вместо Excel.</li>
+          <li>Сценарное моделирование: цена, реклама, закупка.</li>
+          <li>Автоматический недельный отчёт по расписанию.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Технологии</h2>
+    <div class="card">
+      <table>
+        <tr><td>Язык</td><td>Node.js 24, CommonJS; PowerShell для запуска Excel и печати PDF</td></tr>
+        <tr><td>Excel</td><td>Генерация <code>.xlsx</code> через <code>jszip</code>, формулы в самих файлах, без внешних библиотек</td></tr>
+        <tr><td>Данные</td><td>Разбор <code>.xlsx</code> напрямую из XML; CSV → JSON для плана в заказах</td></tr>
+        <tr><td>Отчёты</td><td>Markdown, HTML + CSS без зависимостей, PDF через Chrome headless</td></tr>
+        <tr><td>Интеграции</td><td>Telegram Bot API (дайджест), Excel COM (работа с готовыми файлами)</td></tr>
+        <tr><td>Агенты</td><td>OpenCode: YAML-frontmatter, <code>mode: primary / subagent</code>, права на файловые операции</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="foot">
+    Демонстрационное описание: клиентских данных нет. Структура и команды соответствуют пакету «ФИН менеджер селлера».
+  </div>
+</div>
+</body>
+</html>

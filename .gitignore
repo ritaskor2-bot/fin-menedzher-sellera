@@ -1,0 +1,17 @@
+# данные клиента
+input/*.xlsx
+input/*.csv
+input/*.json
+!input/README.md
+
+# результаты и рабочие файлы
+output/*
+!output/.gitkeep
+
+# служебное
+tmp/
+node_modules/
+*.pdf
+*.log
+.DS_Store
+Thumbs.db
